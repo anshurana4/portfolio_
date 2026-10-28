@@ -9,9 +9,9 @@ const AchievementCard = ({ achievement, index }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.18 }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="glass p-6 rounded-3xl hover:border-primary/50 transition-all group"
+    className="glass h-full p-6 rounded-3xl hover:border-primary/50 transition-all group"
   >
-    <div className="flex items-start gap-4">
+    <div className="flex h-full items-start gap-4">
       <div className="p-3 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background transition-colors">
         <Award size={24} />
       </div>
@@ -20,6 +20,16 @@ const AchievementCard = ({ achievement, index }) => (
         <p className="text-text-secondary text-sm leading-relaxed mb-4">
           {achievement.description}
         </p>
+        {achievement.highlights?.length > 0 && (
+          <ul className="space-y-2 mb-4 text-text-secondary text-xs leading-relaxed">
+            {achievement.highlights.map((highlight) => (
+              <li key={highlight} className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        )}
         {achievement.link !== "#" && (
           <a
             href={achievement.link}
@@ -59,7 +69,7 @@ const Achievements = () => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {profile.achievements.map((achievement, index) => (
             <AchievementCard key={index} achievement={achievement} index={index} />
           ))}
