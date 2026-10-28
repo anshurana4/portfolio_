@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { profile } from '../../data/profile';
-import { Calendar, Briefcase, GraduationCap, Award, ChevronDown, ChevronUp } from 'lucide-react';
+import { Calendar, Briefcase, GraduationCap, Award, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 
 const ExperienceItem = ({ item, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -59,9 +59,27 @@ const ExperienceItem = ({ item, index }) => {
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden pt-4 mt-4 border-t border-white/10"
               >
-                <p className="text-text-secondary text-xs leading-relaxed">
-                  Additional details about this role and the impact created can be added here from the profile configuration.
-                </p>
+                {item.details?.length > 0 && (
+                  <ul className="space-y-2 text-text-secondary text-xs leading-relaxed">
+                    {item.details.map((detail) => (
+                      <li key={detail} className="flex gap-2">
+                        <span className="text-primary">•</span>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {item.credentialLink && (
+                  <a
+                    href={item.credentialLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 mt-4 text-primary text-xs font-bold hover:underline"
+                  >
+                    {item.credential}
+                    <ExternalLink size={14} />
+                  </a>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

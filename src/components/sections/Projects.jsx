@@ -17,13 +17,15 @@ const ProjectCard = ({ project, index, isFeatured = false }) => {
       <div className="grid lg:grid-cols-2 h-full">
         {/* Visual Preview */}
         <div className="relative aspect-video lg:aspect-square overflow-hidden bg-surface">
-          {isFeatured ? (
-            <DoggleMockup />
-          ) : project.preview ? (
+          {project.preview ? (
             <img
               src={project.preview}
               alt={`${project.name} screenshot`}
-              className="w-full h-full object-cover object-top"
+              className={`w-full h-full ${
+                ['resume-analyzer', 'image-gallery', 'doggle'].includes(project.id)
+                  ? 'object-contain object-center p-3'
+                  : 'object-cover object-top'
+              }`}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center p-12">
@@ -94,46 +96,6 @@ const ProjectCard = ({ project, index, isFeatured = false }) => {
     </motion.div>
   );
 };
-
-const DoggleMockup = () => (
-  <div className="w-full h-full p-4 bg-background flex flex-col gap-4 overflow-hidden">
-    {/* Mock Nav */}
-    <div className="h-10 w-full glass rounded-lg flex items-center justify-between px-4">
-      <div className="w-20 h-4 bg-primary/30 rounded" />
-      <div className="flex gap-2">
-        <div className="w-6 h-2 bg-white/10 rounded" />
-        <div className="w-6 h-2 bg-white/10 rounded" />
-      </div>
-    </div>
-
-    {/* Mock Content */}
-    <div className="grid grid-cols-2 gap-4 flex-1">
-      <div className="space-y-4">
-        <div className="h-8 w-1/2 bg-white/10 rounded" />
-        <div className="grid grid-cols-2 gap-2">
-          {[1,2,3,4].map(i => (
-            <div key={i} className="aspect-square bg-surface rounded-lg border border-white/5 p-2">
-              <div className="w-full h-2/3 bg-white/10 rounded mb-2" />
-              <div className="w-1/2 h-2 bg-white/10 rounded" />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="glass rounded-xl p-4 flex flex-col gap-4">
-        <div className="h-4 w-1/3 bg-primary/30 rounded" />
-        <div className="space-y-2">
-          {[1,2,3].map(i => (
-            <div key={i} className="h-8 w-full bg-white/5 rounded flex items-center px-2 gap-2">
-              <div className="w-4 h-4 rounded-full bg-white/10" />
-              <div className="h-2 w-1/2 bg-white/10 rounded" />
-            </div>
-          ))}
-        </div>
-        <div className="mt-auto h-10 w-full bg-primary rounded-lg" />
-      </div>
-    </div>
-  </div>
-);
 
 const Projects = () => {
   return (

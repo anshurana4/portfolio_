@@ -8,6 +8,7 @@ import { Github } from '../components/ui/BrandIcons';
 const ProjectDetails = () => {
   const { projectId } = useParams();
   const project = profile.projects.find(p => p.id === projectId);
+  const projectPreviews = project?.previews || (project?.preview ? [project.preview] : []);
 
   if (!project) {
     return (
@@ -37,12 +38,17 @@ const ProjectDetails = () => {
           animate={{ opacity: 1, y: 0 }}
           className="glass rounded-3xl overflow-hidden mb-12 bg-surface shadow-2xl"
         >
-          {project.preview ? (
-            <img
-              src={project.preview}
-              alt={`${project.name} screenshot`}
-              className="block w-full max-h-[620px] object-contain object-top"
-            />
+          {projectPreviews.length > 0 ? (
+            <div className={`grid ${projectPreviews.length > 1 ? 'md:grid-cols-2' : ''} gap-4 p-4 bg-background/30`}>
+              {projectPreviews.map((preview, index) => (
+                <img
+                  key={preview}
+                  src={preview}
+                  alt={`${project.name} screenshot ${index + 1}`}
+                  className="block w-full h-auto max-h-[720px] rounded-2xl object-contain object-top shadow-lg shadow-black/20"
+                />
+              ))}
+            </div>
           ) : (
             <div className="min-h-[320px] flex items-center justify-center p-8 font-mono text-text-secondary/30 bg-surface">
               <div className="text-center">
